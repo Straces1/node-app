@@ -33,6 +33,7 @@ app.get('/add-note', async (req, res) => {
                 body: 'body text'
             }
         ])
+        re.send('Books added...')
     } catch (error) {
         console.log('err' + error)
     }
