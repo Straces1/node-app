@@ -1,10 +1,13 @@
 require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
-const Book = require('./models/books')
 
+const Book = require('./models/books')
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
+
+app.set('view engine', 'ejs')
 
 mongoose.set('strictQuery', false)
 const connectDB = async () => {
@@ -18,7 +21,7 @@ const connectDB = async () => {
 }
 
 app.get('/', (req, res) => {
-    res.send({title: 'Books'})
+    res.render('index', {title: 'Books'})
 })
 
 app.get('/add-note', async (req, res) => {
@@ -43,7 +46,7 @@ app.get('/books', async (req, res) => {
     const book = await Book.find()
 
     if(book) {
-        res.json(book)
+        res.render('books', {book})
     } else {
         res.send('something went wrong')
     }
